@@ -23,6 +23,7 @@ int main(int argc, const char * argv[])
 //        BNRItem *p = [[BNRItem alloc] initWithItemName:@"Red Sofa" valueInDollars:100 serialNumber:@"A1B2C"];
 //        NSLog(@"%@", p);
         
+        
         for (int i = 0; i < 2; i++) {
             BNRItem *p = [BNRItem randomItem];
             [items addObject:p];
