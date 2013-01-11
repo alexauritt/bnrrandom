@@ -11,7 +11,7 @@
 @implementation BNRItem
 -(id)init
 {
-    return [self initWIthItemName:@"Item" valueInDollars:0 serialNumber:@""];
+    return [self initWithItemName:@"Item" valueInDollars:0 serialNumber:@""];
 }
 
 -(id)initWithItemName:(NSString *)name serialNumber:(NSString *)sNumber
@@ -25,7 +25,7 @@
     return self;
 }
 
--(id)initWIthItemName:(NSString *)name valueInDollars:(int)value serialNumber:(NSString *)sNumber
+-(id)initWithItemName:(NSString *)name valueInDollars:(int)value serialNumber:(NSString *)sNumber
 {
     self = [super init];
     
@@ -38,6 +38,27 @@
     return self;
 }
 
+- (void)setContainedItem:(BNRItem *)i
+{
+    containedItem = i;
+    [i setContainer:self];
+}
+
+- (BNRItem *)containedItem
+{
+    return containedItem;
+}
+
+- (void)setContainer:(BNRItem *)i
+{
+    container = i;
+}
+
+- (BNRItem *)container
+{
+    return container;
+}
+
 + (id)randomItem
 {
     NSArray *randomAdjectiveList = [NSArray arrayWithObjects:@"Fluffy", @"Rusty", @"Shiny", nil];
@@ -45,7 +66,7 @@
     NSInteger adjectiveIndex = rand() % [randomAdjectiveList count];
     NSInteger nounIndex = rand() % [randomNounList count];
     
-    NSString *randomName = [NSString stringWithFormat:@"@ %@",
+    NSString *randomName = [NSString stringWithFormat:@"%@ %@",
                             [randomAdjectiveList objectAtIndex:adjectiveIndex],
                             [randomNounList objectAtIndex:nounIndex]];
     
@@ -57,7 +78,7 @@
                                     'A' + rand() % 26,
                                     '0' + rand() % 10];
     
-    BNRItem *newItem = [[self alloc] initWIthItemName:randomName valueInDollars:randomValue serialNumber:randomSerialNumber];
+    BNRItem *newItem = [[self alloc] initWithItemName:randomName valueInDollars:randomValue serialNumber:randomSerialNumber];
     return newItem;
 }
 
@@ -94,5 +115,10 @@
 - (NSDate*)dateCreated
 {
     return dateCreated;
+}
+
+-(void)dealloc
+{
+    NSLog(@"Destroyed: %@", self);
 }
 @end
